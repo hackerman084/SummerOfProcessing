@@ -20,7 +20,6 @@ class Line{
     xTo = x2; 
     yTo = y1; 
     this.direction = direction; 
-    //lineColor = 255; 
   }
   public Line(){
     
@@ -30,15 +29,19 @@ class Line{
     return Float.toString(xFrom) + " " + Float.toString(yFrom) + " " + Float.toString(xTo) + " " + Float.toString(yTo)  + " " +Float.toString(lineColor); 
   }
   
-  public void createLine(){
-    stroke(255,0,0); 
-    strokeWeight(5); 
+  public void createLine(int addition){
+    strokeWeight(3); 
+    strokeJoin(BEVEL); 
+    stroke(0, 100, addition); 
     line(xFrom, yFrom, xTo, yTo); 
   }
 }
 
 ArrayList<Line> lines = new ArrayList<Line> (); 
+int brightness = 5; 
 void setup(){
+  colorMode(HSB, 360, 100, 100); 
+
   //fullScreen();
   size(400,400);
   background(0);
@@ -46,14 +49,12 @@ void setup(){
   Line line = new Line(0,(int) random(height), (int) random(20), 1); 
   //want to start randomly on left edge
   lines.add(line); 
-  line.createLine();
-
+  line.createLine(1);
   frameRate(5); 
 }
 
 void draw() {
-  println("=====");  //<>//
-  //getting the previously added line
+  //getting the previously added line //<>//
   Line prevLine = lines.get(lines.size() - 1);
   //randomly choose to go up, down, or straight
   Line newLine = new Line(); 
@@ -93,7 +94,8 @@ void draw() {
   newLine.direction = direction; 
   //creating new line
   lines.add(newLine); 
-  newLine.createLine(); 
+  brightness+=2; 
+  newLine.createLine(brightness); 
   
 
 }
