@@ -83,8 +83,9 @@ void draw() {
     //only go forward
     int xRan = (int) random(prevLine.xTo + 10, prevLine.xTo + 30);
     //reset
-    while (xRan > width){
-       xRan = (int) random(prevLine.xTo - 50, prevLine.xTo - 10); 
+    if (xRan > width){
+       //xRan = (int) random(prevLine.xTo - 50, prevLine.xTo - 10); 
+       noLoop(); 
     }
     newLine.xTo = xRan;
   }
