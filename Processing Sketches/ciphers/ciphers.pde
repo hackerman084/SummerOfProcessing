@@ -38,7 +38,7 @@ class Circuit {
   }
   
   public void addToCircuit(){
-    Line prevLine = circuit.get(circuit.size() - 1); //<>//
+    Line prevLine = circuit.get(circuit.size() - 1);
     println(prevLine); 
     //randomly choose to go up, down, or straight
     Line newLine = new Line(); 
@@ -57,10 +57,40 @@ class Circuit {
     if (direction < 1){
       newLine.xTo = prevLine.xTo; 
       int yRan = (int) random(prevLine.yFrom - 40, prevLine.yFrom + 40);
-      while (yRan > height){
-        yRan = (int) random(prevLine.yFrom - 50, prevLine.yFrom - 10);
+      //top down
+      if (yRan < 5){
+        Line endLine = new Line();  //<>//
+        endLine.xFrom = prevLine.xTo; 
+        endLine.xTo = prevLine.xTo; 
+        endLine.yFrom = prevLine.yFrom; 
+        endLine.yTo = 0; 
+        
+        circuit.add(endLine); 
+        endLine.createLine(); 
+        newLine.yFrom = height; 
+        newLine.yTo = (int) random(height-20,height-1); 
+        newLine.xFrom = prevLine.xFrom; 
+        newLine.xTo = prevLine.xFrom; 
+        circuit.clear(); 
       }
-      newLine.yTo = yRan;      
+      else if (yRan % height < 5 || yRan >= height) {
+        Line endLine = new Line();  //<>//
+        endLine.xFrom = prevLine.xTo; 
+        endLine.xTo = prevLine.xTo; 
+        endLine.yFrom = prevLine.yFrom; 
+        endLine.yTo = height; 
+        
+        circuit.add(endLine); 
+        endLine.createLine(); 
+        newLine.yFrom = 0; 
+        newLine.yTo = (int) random(1,20);
+        newLine.xFrom = prevLine.xFrom; 
+        newLine.xTo = prevLine.xFrom; 
+        circuit.clear(); 
+      }
+      else {
+        newLine.yTo = yRan;      
+      }
     }
     //straight
     else {
@@ -69,20 +99,15 @@ class Circuit {
       int xRan = (int) random(prevLine.xTo + 10, prevLine.xTo + 30);
       //println(xRan); 
       //reset
-      if (xRan >= width){
-         //println(xRan); 
-         //xRan = (int) random(prevLine.xTo - 50, prevLine.xTo - 10); 
-         
-         //end the line
-         Line endLine = new Line(prevLine.xFrom, prevLine.yFrom, width, direction);
-         circuit.add(endLine); 
-         endLine.createLine(); 
+      if (xRan % width <= 5 || xRan >= width) {
+        Line endLine = new Line(prevLine.xTo, prevLine.yTo, width, direction); //<>//
+        circuit.add(endLine); 
+        endLine.createLine(); 
          //reset
-         newLine.xFrom = 0; 
-         newLine.xTo = (int) random(0,20); 
-         this.brightness = 0;
-         //remove all stuff from array? would this work?
-         circuit.clear(); 
+        newLine.xFrom = 0; 
+        newLine.xTo = (int) random(0,10); 
+        this.brightness = 0;
+         //remove all stuff from arr
       }
       else {
         newLine.xTo = xRan;
@@ -138,11 +163,11 @@ void setup(){
   circuit1 = new Circuit(3, 10, 100, 0, 3); 
   //circuit2 = new Circuit(3, 360, 50, 0, 1); 
 
-  frameRate(5); 
+  frameRate(10); 
 }
 
 void draw() {
-  circuit1.addToCircuit(); //<>//
+  circuit1.addToCircuit();
   //circuit2.addToCircuit(); 
 
 }
