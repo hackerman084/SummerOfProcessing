@@ -29,7 +29,6 @@ class Circuit {
     Line line = new Line(0,(int) random(height), (int) random(20), 1); 
     //want to start randomly on left edge
     circuit.add(line); 
-    //line.createLine();   
     this.addToCircuit(); 
   }
   
@@ -58,36 +57,31 @@ class Circuit {
       newLine.xTo = prevLine.xTo; 
       int yRan = (int) random(prevLine.yFrom - 40, prevLine.yFrom + 40);
       //top down
-      if (yRan < 5){
-        Line endLine = new Line();  //<>//
+      
+      if (yRan < 5 || yRan % height < 5 || yRan >= height){
+        Line endLine = new Line(); 
         endLine.xFrom = prevLine.xTo; 
         endLine.xTo = prevLine.xTo; 
         endLine.yFrom = prevLine.yFrom; 
-        endLine.yTo = 0; 
         
-        circuit.add(endLine); 
-        endLine.createLine(); 
-        newLine.yFrom = height; 
-        newLine.yTo = (int) random(height-20,height-1); 
+        if (yRan < 5){
+          endLine.yTo = 0; 
+          endLine.createLine(); 
+          newLine.yFrom = height; 
+          newLine.yTo = (int) random(height-20,height-1); 
+          
+        }
+        else {
+          endLine.yTo = height; 
+          endLine.createLine(); 
+          newLine.yFrom = 0; 
+          newLine.yTo = (int) random(1,20);
+        }
+        
         newLine.xFrom = prevLine.xFrom; 
         newLine.xTo = prevLine.xFrom; 
         circuit.clear(); 
-      }
-      else if (yRan % height < 5 || yRan >= height) {
-        Line endLine = new Line();  //<>//
-        endLine.xFrom = prevLine.xTo; 
-        endLine.xTo = prevLine.xTo; 
-        endLine.yFrom = prevLine.yFrom; 
-        endLine.yTo = height; 
-        
-        circuit.add(endLine); 
-        endLine.createLine(); 
-        newLine.yFrom = 0; 
-        newLine.yTo = (int) random(1,20);
-        newLine.xFrom = prevLine.xFrom; 
-        newLine.xTo = prevLine.xFrom; 
-        circuit.clear(); 
-      }
+      } //<>// //<>//
       else {
         newLine.yTo = yRan;      
       }
@@ -97,12 +91,11 @@ class Circuit {
       newLine.yTo = prevLine.yTo; 
       //only go forward
       int xRan = (int) random(prevLine.xTo + 10, prevLine.xTo + 30);
-      //println(xRan); 
       //reset
       if (xRan % width <= 5 || xRan >= width) {
         Line endLine = new Line(prevLine.xTo, prevLine.yTo, width, direction); //<>//
-        circuit.add(endLine); 
         endLine.createLine(); 
+        circuit.clear(); 
          //reset
         newLine.xFrom = 0; 
         newLine.xTo = (int) random(0,10); 
@@ -150,24 +143,19 @@ class Circuit {
 }
 
 Circuit circuit1; 
-Circuit circuit2; 
-
 void setup(){
   //fullScreen();
   size(400,400);
-  colorMode(HSB, 360, 100, 100); 
+  colorMode(HSB, 360, 100, 150); 
 
   background(0);
   //starting off
-  //int strokeWeight, int hue, int saturation, int brightness, int gradient
   circuit1 = new Circuit(3, 10, 100, 0, 3); 
-  //circuit2 = new Circuit(3, 360, 50, 0, 1); 
 
   frameRate(10); 
 }
 
 void draw() {
   circuit1.addToCircuit();
-  //circuit2.addToCircuit(); 
 
 }
