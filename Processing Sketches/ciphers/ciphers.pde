@@ -45,7 +45,7 @@ class Circuit {
     newLine.xFrom = prevLine.xTo; 
     newLine.yFrom = prevLine.yTo; 
     
-    float direction = (int) random(2);
+    int direction = (int) random(2);
     //previous line went up/down
     //0 is up / down, 1 is straight
     if (prevLine.direction < 1){
@@ -72,10 +72,17 @@ class Circuit {
       if (xRan >= width){
          //println(xRan); 
          //xRan = (int) random(prevLine.xTo - 50, prevLine.xTo - 10); 
+         
+         //end the line
+         Line endLine = new Line(prevLine.xFrom, prevLine.yFrom, width, direction);
+         circuit.add(endLine); 
+         endLine.createLine(); 
+         //reset
          newLine.xFrom = 0; 
          newLine.xTo = (int) random(0,20); 
-         this.brightness = 0; 
-         //noLoop(); 
+         this.brightness = 0;
+         //remove all stuff from array? would this work?
+         circuit.clear(); 
       }
       else {
         newLine.xTo = xRan;
