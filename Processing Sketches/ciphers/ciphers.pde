@@ -29,7 +29,8 @@ class Circuit {
     Line line = new Line(0,(int) random(height), (int) random(20), 1); 
     //want to start randomly on left edge
     circuit.add(line); 
-    line.createLine();    
+    //line.createLine();   
+    this.addToCircuit(); 
   }
   
   public Circuit(){
@@ -37,7 +38,8 @@ class Circuit {
   }
   
   public void addToCircuit(){
-    Line prevLine = circuit.get(circuit.size() - 1);
+    Line prevLine = circuit.get(circuit.size() - 1); //<>//
+    println(prevLine); 
     //randomly choose to go up, down, or straight
     Line newLine = new Line(); 
     newLine.xFrom = prevLine.xTo; 
@@ -65,12 +67,19 @@ class Circuit {
       newLine.yTo = prevLine.yTo; 
       //only go forward
       int xRan = (int) random(prevLine.xTo + 10, prevLine.xTo + 30);
+      //println(xRan); 
       //reset
-      if (xRan > width){
+      if (xRan >= width){
+         //println(xRan); 
          //xRan = (int) random(prevLine.xTo - 50, prevLine.xTo - 10); 
-         noLoop(); 
+         newLine.xFrom = 0; 
+         newLine.xTo = (int) random(0,20); 
+         this.brightness = 0; 
+         //noLoop(); 
       }
-      newLine.xTo = xRan;
+      else {
+        newLine.xTo = xRan;
+      }
     }
   
     newLine.direction = direction; 
@@ -120,13 +129,13 @@ void setup(){
   //starting off
   //int strokeWeight, int hue, int saturation, int brightness, int gradient
   circuit1 = new Circuit(3, 10, 100, 0, 3); 
-  circuit2 = new Circuit(3, 360, 50, 0, 1); 
+  //circuit2 = new Circuit(3, 360, 50, 0, 1); 
 
   frameRate(5); 
 }
 
 void draw() {
   circuit1.addToCircuit(); //<>//
-  circuit2.addToCircuit(); 
+  //circuit2.addToCircuit(); 
 
 }
