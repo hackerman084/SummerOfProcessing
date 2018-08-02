@@ -26,7 +26,7 @@ class Circuit {
     this.gradient = gradient; 
     circuit = new ArrayList<Line> ();
     
-    Line line = new Line(0,(int) random(height), (int) random(20), 1); 
+    Line line = new Line(0,(int) random(height), (int) random(20), 1, hue); 
     //want to start randomly on left edge
     circuit.add(line); 
     this.addToCircuit(); 
@@ -38,12 +38,10 @@ class Circuit {
   
   public void addToCircuit(){
     Line prevLine = circuit.get(circuit.size() - 1);
-    println(prevLine); 
     //randomly choose to go up, down, or straight
-    Line newLine = new Line(); 
+    Line newLine = new Line(hue); 
     newLine.xFrom = prevLine.xTo; 
     newLine.yFrom = prevLine.yTo; 
-    
     int direction = (int) random(2);
     //previous line went up/down
     //0 is up / down, 1 is straight
@@ -59,7 +57,7 @@ class Circuit {
       //top down
       
       if (yRan < 5 || yRan % height < 5 || yRan >= height){
-        Line endLine = new Line(); 
+        Line endLine = new Line(hue); 
         endLine.xFrom = prevLine.xTo; 
         endLine.xTo = prevLine.xTo; 
         endLine.yFrom = prevLine.yFrom; 
@@ -93,7 +91,7 @@ class Circuit {
       int xRan = (int) random(prevLine.xTo + 10, prevLine.xTo + 30);
       //reset
       if (xRan % width <= 5 || xRan >= width) {
-        Line endLine = new Line(prevLine.xTo, prevLine.yTo, width, direction); //<>//
+        Line endLine = new Line(prevLine.xTo, prevLine.yTo, width, direction, hue); //<>//
         endLine.createLine(); 
         circuit.clear(); 
          //reset
@@ -116,26 +114,28 @@ class Circuit {
   
   class Line{
     int xFrom, yFrom, xTo, yTo; 
-    int lineColor = 255; 
     float direction = 1; 
-    public Line(int x1, int y1, int x2, int direction){
+    int lineColor; 
+    public Line(int x1, int y1, int x2, int direction, int lineColor){
       xFrom = x1; 
       yFrom = y1; 
       xTo = x2; 
       yTo = y1; 
       this.direction = direction; 
+      this.lineColor = lineColor; 
     }
-    public Line(){
+    public Line(int hue){
+      this.lineColor = hue; 
     }
     
     public String toString(){
-      return Float.toString(xFrom) + " " + Float.toString(yFrom) + " " + Float.toString(xTo) + " " + Float.toString(yTo)  + " " +Float.toString(lineColor); 
+      return Float.toString(xFrom) + " " + Float.toString(yFrom) + " " + Float.toString(xTo) + " " + Float.toString(yTo) ; 
     }
     
     public void createLine(){
       strokeWeight(strokeWeight); 
       strokeJoin(BEVEL); 
-      stroke(0, saturation, brightness); 
+      stroke(lineColor, saturation, brightness); 
       line(xFrom, yFrom, xTo, yTo); 
       brightness+=gradient; 
     }
@@ -150,7 +150,7 @@ void setup(){
 
   background(0);
   //starting off
-  circuit1 = new Circuit(3, 10, 100, 0, 3); 
+  circuit1 = new Circuit(3, 180, 100, 0, 2); 
 
   frameRate(10); 
 }
