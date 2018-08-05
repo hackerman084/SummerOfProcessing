@@ -10,6 +10,7 @@
 import java.util.Base64; 
 import java.util.ArrayList; 
 
+
 class Circuit {
   ArrayList<Line> circuit; 
   int strokeWeight; 
@@ -147,11 +148,12 @@ void setup(){
   //fullScreen();
   size(400,400);
   colorMode(HSB, 360, 100, 150); 
-
   background(0);
   //starting off
-  circuit1 = new Circuit(3, 180, 100, 0, 2); 
-
+  String text = "This is a super duper secret"; 
+  text = Base64.getEncoder().encodeToString(text.getBytes());
+  println(text); 
+  circuit1 = new Circuit((text.length() % 5)+1, 180, 100, 0, 2); 
   frameRate(10); 
 }
 
