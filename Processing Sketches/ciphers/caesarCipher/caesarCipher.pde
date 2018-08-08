@@ -21,12 +21,11 @@ float t = 0.0;
 void setup(){
   fullScreen(P3D); 
   strokeWeight(3);
-  frameRate(200);
+  frameRate(300);
   colorMode(HSB, 360,100,100); 
   //angling the camera to get a better view of the tornado
   camera(50, 100, 200, 0, 0, 0, 0, -1, 0);
   background(10);
-  println("height: " +height); 
 }
 
 ArrayList<Circle> circles = new ArrayList<Circle>(); 
@@ -55,8 +54,7 @@ void draw(){
     
     if ((y * 15 - (height / 6)) > height/20) {
       int ran = (int) random(circles.size() - 100, circles.size()); 
-      println(circles.size()); 
-      if (ran % 2 == 0) {
+      if (ran % 10 == 0) {
         circles.get(ran).flash(); 
       }
     }
