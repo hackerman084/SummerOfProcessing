@@ -4,7 +4,8 @@ float x = 0.0;
 float y = 0.0; 
 float z = 0.0; 
 float t = 0.0;
-int hue = 0; 
+int hue = 0;
+
 public String caesarEncode(String text) {
   char[] letters = text.toCharArray(); 
   int shift = 3; 
