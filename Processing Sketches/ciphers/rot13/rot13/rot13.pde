@@ -16,7 +16,7 @@ void setup() {
   colorMode(HSB, 360, 100,100,100); 
   int size = height / 10;
   chimes = new Chimes(size); 
-  frameRate(10);
+  frameRate(15);
   char[] text = rot13Encode("This is a secret").toCharArray();
   sum = 0; 
   for (char a : text){
